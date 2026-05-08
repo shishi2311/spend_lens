@@ -1,0 +1,33 @@
+# Normalize line endings on commit; emit native on checkout.
+# Keeps diffs clean across macOS/Linux/Windows contributors.
+* text=auto eol=lf
+
+# Source/text — force LF, no BOM.
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.mjs       text eol=lf
+*.cjs       text eol=lf
+*.json      text eol=lf
+*.md        text eol=lf
+*.css       text eol=lf
+*.html      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.sql       text eol=lf
+*.sh        text eol=lf
+.gitignore  text eol=lf
+.env*       text eol=lf
+
+# Binary — never touch.
+*.pdf       binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.ico       binary
+*.woff      binary
+*.woff2     binary
+
+# Lockfile — large, never diff inline.
+pnpm-lock.yaml linguist-generated=true -diff
