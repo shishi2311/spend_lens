@@ -17,3 +17,12 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
+## Day 2 — 2026-05-08
+**Hours worked:** 6
+**What I did:** Built the audit engine. `src/engine/types.ts` with the AuditInput/AuditResult contracts, `src/engine/pricing.ts` as the catalog (with `findPlan` helper and `CREDEX_SOURCED` set), and the three rule files (`downgrade-plan.ts`, `alternative-tool.ts`, `use-credits.ts`). Wrote `audit.ts` orchestrator. Added the friction-aware picker: when multiple rules fire on the same tool, prefer lower friction if it captures ≥80% of the top savings — otherwise take the bigger number. Wrote 14 tests covering each rule's positive + negative paths, the friction tiebreaker, totals + ctaTier classification, and output hygiene. All passing. Committed `PRICING_DATA.md` with citation URLs + verification dates.
+**What I learned:** I started the engine with rules written as a switch on tool name. Halfway through I refactored to "each rule is a `Rule` function that returns `ToolFinding | null`" — way easier to test in isolation. The naive max-savings picker was the original design; I caught the friction-aware picker need only when test #1 failed (Cursor Business 2-seat case suggested switching IDEs over a same-vendor downgrade). That's the moment when I trusted the test suite over the design doc.
+**Blockers / what I'm stuck on:** Pricing data for Claude's Team plan (5-seat minimum) was confusing — the Anthropic page lists "$25/seat" with min seats called out only in a footnote. I pulled the URL, took a screenshot, and made the minSeats explicit in the catalog so future-me doesn't fall for the same thing.
+**Plan for tomorrow:** Form UI with Zustand persistence + landing page. Stub the API routes so the form has a real endpoint to POST to.
+
+---
+
