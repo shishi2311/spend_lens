@@ -44,3 +44,12 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
+## Day 5 — 2026-05-11
+**Hours worked:** 6
+**What I did:** Wrote `src/lib/anthropic/summary.ts` — generateSummary calls `claude-haiku-4-5` with `cache_control: ephemeral` on the system prompt. Templated fallback handles missing key, timeout (4s), 429, 5xx. `/api/summary` is idempotent and persists the summary back to the audit row so it's only generated once. Built `/r/[id]/page.tsx` (server component, reads via anon client, returns notFound if missing), `/r/[id]/opengraph-image.tsx` (dynamic OG with savings number, gradient mesh, tools list), root `/opengraph-image.tsx`. Added `generateMetadata` with Twitter cards. Built the result-page UI: `audit-result-view.tsx` (hero, per-tool breakdown, conditional Credex CTA for `ctaTier === "high"`), `audit-summary-block.tsx` (lazy-loads summary client-side, with a graceful "summary temporarily unavailable" path). Conducted user interview #2 (~20 minutes with a Y Combinator founder running a 12-person team).
+**What I learned:** OG image generation in Next 15's `next/og` uses an inline-style-only subset (no Tailwind). The trick is to keep the layout flat and rely on flexbox + linear-gradient — anything more complex breaks silently with a non-helpful error. I prototyped the OG locally with `pnpm dev` and `view-source:localhost:3000/og` before deploying.
+**Blockers / what I'm stuck on:** Anthropic API key is on a usage-tier with rate limits — first integration test hit a 429 because I'd been iterating on the prompt all morning. The templated fallback caught it gracefully, which is the design, but it surfaced a UX question: should we visibly tell the user the summary is templated? Decided no — they don't care, and the fallback's voice is tuned to match.
+**Plan for tomorrow:** Polish day. PDF export (the bonus), a11y pass (focus management, color contrast, ARIA live regions), Lighthouse mobile audit, screenshots for README, README + ARCHITECTURE deep edits.
+
+---
+
