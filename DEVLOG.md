@@ -53,3 +53,12 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
+## Day 6 — 2026-05-12
+**Hours worked:** 7
+**What I did:** Built the PDF export bonus — `src/lib/pdf/audit-pdf.tsx` renders the audit via `@react-pdf/renderer` (no headless Chrome), `/api/pdf/[id]/route.tsx` streams the buffer back. Hit a TypeScript-vs-DOM types annoyance with `BodyInit` accepting Node `Buffer`; resolved with a fresh ArrayBuffer copy (notes in the route file). A11y pass: keyboard navigation through the form (tab order, focus rings via `:focus-visible`), `aria-live="polite"` on the dynamic findings list, `aria-busy` on the summary loading state, color contrast against WCAG AA. Mobile layout pass on the result page (the hero number was clipping at iPhone SE width). Took screenshots for README, recorded a 30-second Loom. Conducted user interview #3 (~30 minutes with an indie hacker running a content business). Wrote ARCHITECTURE.md, finalized PRICING_DATA.md, drafted PROMPTS.md.
+**What I learned:** Lighthouse mobile flagged my hero font weight (800) as causing CLS because system-ui doesn't have a true 800 weight on iOS — fell back to 700 and the score jumped 4 points. Also: deferring the AI summary to client-side fetch was a Lighthouse win because the server-rendered HTML stays small and TTFB-fast.
+**Blockers / what I'm stuck on:** Initial PDF render was tiny (renderToBuffer returned a 30KB file with all-default-margins). Fixed by hand-styling the `Page` with margins matching A4 + a fixed footer. Also the third user interview ran over by 15 minutes because the founder wanted to talk about their own AI spend in detail — best kind of blocker.
+**Plan for tomorrow:** Entrepreneurial files — GTM, ECONOMICS, USER_INTERVIEWS, LANDING_COPY, METRICS, REFLECTION, TESTS.md. Final deploy. Submission.
+
+---
+
