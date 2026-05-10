@@ -35,12 +35,3 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
-## Day 4 — 2026-05-10
-**Hours worked:** 6
-**What I did:** Wrote `supabase/schema.sql` (audits + leads tables, RLS policies — anon SELECT on audits, no anon access to leads), wired the service-role and anon clients (`src/lib/supabase/server.ts`), built `/api/audit` (Zod-validated, IP-rate-limited, runs the engine, persists, returns audit id), built `/api/lead` (honeypot check, lead insert, fire-and-forget Resend confirmation + Credex notification for high-savings cases). Wired `src/lib/ratelimit.ts` (Upstash sliding window 5/10min) with a graceful no-op when not configured locally. Added `src/lib/email/resend.ts` with two templated emails (user confirmation + Credex sales notification). Conducted user interview #1 (~25 minutes with a Series A founder).
-**What I learned:** The lead insert's IP-hash field — I almost stored the raw IP. Hashed it instead (sha256, 16-char prefix) so we have abuse-detection signal without storing PII. Worth a sentence in the GDPR-light story we'd write if this ever ships beyond a demo.
-**Blockers / what I'm stuck on:** Initial cut of `/api/lead` returned a 404 if the audit id didn't exist; I changed it to a 404 with an explicit error so the UI could distinguish "audit gone" from "network died." Also realized fire-and-forget emails need a `.catch` or they'll throw an unhandled rejection in dev — added defensive `.catch((err) => console.warn(...))` chains.
-**Plan for tomorrow:** AI summary integration with the templated fallback, share URL with OG metadata + dynamic OG image. The summary is the only place AI gets to play; the fallback is what makes it production-grade.
-
----
-
