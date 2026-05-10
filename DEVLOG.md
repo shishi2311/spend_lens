@@ -26,3 +26,12 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
+## Day 3 — 2026-05-09
+**Hours worked:** 7
+**What I did:** Authored the shadcn-style UI primitives (Button, Input, Label, Select, Card) directly in `src/components/ui/` instead of using the shadcn CLI — same Radix internals, simpler dep tree, no git-init coupling. Built the Zustand-persisted form store. Built `SpendForm` with add/remove tools, plan-aware select cascading (changing tool resets plan to a valid one), keyboard navigation, and proper ARIA labels. Built the landing page with hero, how-it-works section, and the Credex link. Added a hydration-loading state so persist rehydration doesn't flash form defaults.
+**What I learned:** Zustand's `persist` middleware needs a hydrated check before render — without it, the SSR'd form mounts with defaults, then localStorage rehydrates and the form values jump. I added a `useEffect(() => setHydrated(true), [])` and a Loader2 spinner to handle the gap cleanly.
+**Blockers / what I'm stuck on:** The Select component had an a11y issue where `aria-label` on the trigger was getting overridden by Radix's default ID-based label. Fixed by passing `aria-label` explicitly on every `SelectTrigger` and adding a sibling `Label` for visual cue.
+**Plan for tomorrow:** Backend wiring — Supabase schema migration, `/api/audit` and `/api/lead` routes, Resend transactional email, Upstash rate limit, honeypot. The whole "form submits → audit persists → email fires" loop needs to work end-to-end so I can iterate on the result page tomorrow.
+
+---
+
