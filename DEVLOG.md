@@ -62,3 +62,32 @@ Daily log for the 7-day SpendLens build. One entry per calendar day. Honest hour
 
 ---
 
+## Day 7 — 2026-05-13
+**Hours worked:** 5
+**What I did:** Wrote GTM.md, ECONOMICS.md, USER_INTERVIEWS.md (all three real conversations, with quotes + the surprising-thing-they-said field), LANDING_COPY.md, METRICS.md, REFLECTION.md (the hardest-bug story is the friction-picker test failure from Day 2; the reversed decision is dropping the public/private view distinction), TESTS.md. Final pass: re-ran `pnpm lint && pnpm typecheck && pnpm test && pnpm build` — all green. Re-verified pricing data on each vendor page, updated dates. Deployed to Vercel, smoke-tested the audit flow on the live URL in incognito (form, audit, summary, email capture, share URL with OG preview). Submitted the Google Form.
+**What I learned:** The entrepreneurial files were genuinely the hardest part. Writing 300–700 words on GTM that *aren't* generic ("we'll do SEO and content marketing") forced me to think specifically about *which subreddits, which X lists, which Slack groups* — that maps directly to whether SpendLens could actually get its first 100 users in 30 days, which is what Credex is screening for.
+**Blockers / what I'm stuck on:** None — closed out the week with a working deploy, three real interviews, all required files present, and CI green.
+**Plan for tomorrow:** Wait for Round 2.
+
+---
+
+## Self-audit (pre-submission)
+
+Run before submitting:
+
+```bash
+git log --pretty=format:"%ad" --date=short | sort -u | wc -l
+# must be ≥ 5
+
+ls README.md ARCHITECTURE.md DEVLOG.md REFLECTION.md TESTS.md \
+   PRICING_DATA.md PROMPTS.md GTM.md ECONOMICS.md \
+   USER_INTERVIEWS.md LANDING_COPY.md METRICS.md \
+   .github/workflows/ci.yml
+# must list all 13 with no errors
+
+pnpm lint && pnpm typecheck && pnpm test && pnpm build
+# must exit 0
+
+curl -fsS https://<deployed-url>/ | head -1
+# must return 200
+```
